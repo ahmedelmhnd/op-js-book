@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read) 
+function Book(title, author, pages, read, index) 
 {
   this.title = title
   this.author = author
@@ -9,18 +9,24 @@ function Book(title, author, pages, read)
 
   this.info  = function()
   {
-    return title + ", " + author + ", " + pages + ", " + read
+    return this.title + ", " + this.author + ", " + this.pages + ", " + this.read
   }
 
   this.getTitle = function()
   {
     return title
   }
+
+  this.toggleIndex = function()
+  {
+    this.read = !this.read
+  }
+
 }
 
 function addBookToLibrary(title, author, pages, read) 
 {
-  myLibrary.push(new Book(title, author, pages, read))
+  myLibrary.push(new Book(title, author, pages, read, myLibrary.length))
 }
 
 const bookshelf = document.querySelector(".bookshelf")
@@ -34,13 +40,30 @@ addBookToLibrary("j3", "jk3", "jk3", true)
 function displayBooks(myLibrary) 
 {
   bookshelf.innerHTML = '';
-  
-    for (const book of myLibrary) 
+
+    for (const [index, book] of myLibrary.entries()) 
         {
           const div = document.createElement("div");
-            div.textContent = book.getTitle()
-            bookshelf.appendChild(div);
+          div.textContent = book.info()
+          bookshelf.appendChild(div);
+          
+          const span = document.createElement("span")
+          const button = document.createElement("button");
+          button.id = index
+          button.classList.add("remove")
+          button.textContent = "remove book"
+
+          const tButton = document.createElement("button");
+          tButton.id = index
+          tButton.classList.add("toggle")
+          tButton.textContent = "toggle read"
+
+          span.appendChild(button)
+          span.appendChild(tButton)
+          div.appendChild(span)
         }
+        attachRemoveListeners();
+        attachToggleListeners();
 }
 
 
@@ -75,3 +98,28 @@ confirmBtn.addEventListener("click", (event) =>
     dialog.close(number.value);
     
   });
+
+  function attachRemoveListeners() {
+    const removeButtons = document.querySelectorAll(".remove");
+  
+    removeButtons.forEach((remove) => {
+      remove.addEventListener("click", (e) => {
+        const elementId = parseInt(e.target.id, 10); // Get the index from the ID
+        myLibrary.splice(elementId, 1); // Remove the book
+        displayBooks(myLibrary); // Re-render the book list
+      });
+    });
+  }
+
+
+  function attachToggleListeners() {
+    const toggleButtons = document.querySelectorAll(".toggle");
+  
+    toggleButtons.forEach((toggle) => {
+      toggle.addEventListener("click", (e) => {
+        const elementId = parseInt(e.target.id, 10); // Get the index from the ID
+        myLibrary[elementId].toggleIndex()
+        displayBooks(myLibrary); // Re-render the book list
+      });
+    });
+  }
