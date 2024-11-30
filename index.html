@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="bookshelf">
+
+    </div>
+
+    <dialog>
+
+        <form>
+            <p>
+                <label>
+                    Title:
+                    <input  class="title" type="text" required>
+                </label>
+                
+                <label>
+                    Author:
+                    <input class="author" type="text" required>
+                </label>
+
+                <label>
+                    Number of Pages:
+                    <input class="number" type="number" required>
+                </label>
+                
+                <label>
+                    Reading status:
+                    <select class="read-status">
+                        <option value="default">Unread</option>
+                        <option>Read</option>
+                    </select>
+                </label>
+            </p>
+
+            <div>
+                <button value="cancel" formmethod="dialog">Cancel</button>
+                <button id="confirmBtn" value="default">Confirm</button>
+              </div>
+        </form>
+    
+    </dialog>
+    
+    <button class="new">Show the dialog</button>
+
+    <output></output>
+    
+</body>
+</html>
+
