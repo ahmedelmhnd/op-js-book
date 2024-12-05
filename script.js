@@ -1,23 +1,28 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read, index) 
+class Book
 {
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
+  constructor(title, author, pages, read, index) 
+  {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.read = read
+  }
 
-  this.info  = function()
+  
+
+  info()
   {
     return this.title + ", " + this.author + ", " + this.pages + ", " + this.read
   }
 
-  this.getTitle = function()
+  getTitle()
   {
     return title
   }
 
-  this.toggleIndex = function()
+  toggleIndex()
   {
     this.read = !this.read
   }
