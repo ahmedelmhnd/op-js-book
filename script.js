@@ -14,12 +14,17 @@ class Book
 
   info()
   {
-    return this.title + ", " + this.author + ", " + this.pages + ", " + this.read
+    return this._title + ", " + this.author + ", " + this.pages + ", " + this.read
   }
 
-  getTitle()
+  set title(value)
   {
-    return title
+    this._title = value
+  }
+
+  get title()
+  {
+    return this._title
   }
 
   toggleIndex()
@@ -84,6 +89,7 @@ const title = document.querySelector(".title")
 const author = document.querySelector(".author")
 const number = document.querySelector(".number")
 const readStatus = document.querySelector(".read-status")
+const error = document.querySelector(".error");
 
 showDialog.addEventListener("click", () => 
     {
@@ -97,10 +103,16 @@ dialog.addEventListener("close", (e) =>
 
 confirmBtn.addEventListener("click", (event) => 
   {
-    addBookToLibrary(title.value, author.value, number.value, readStatus.value === "read" ? true: false)
-    displayBooks(myLibrary)
     event.preventDefault();
-    dialog.close(number.value);
+    if (!number.checkValidity()) 
+    {
+      error.textContent = number.validationMessage;
+    }else{
+      addBookToLibrary(title.value, author.value, number.value, readStatus.value === "read" ? true: false)
+      displayBooks(myLibrary)
+      dialog.close(number.value);
+    }
+    
     
   });
 
